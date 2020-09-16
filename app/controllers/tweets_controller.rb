@@ -48,7 +48,7 @@ enable :sessions
 
   patch '/tweets/:id' do
     tweet = Tweet.find_by(id: params[:id])
-    if params[:content].empty?
+    if params[:content].empty? || tweet.user.id != session[:user_id]
       redirect to "/tweets/#{tweet.id}/edit"
     else 
       tweet.update(content: params[:content])
